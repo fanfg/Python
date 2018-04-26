@@ -8,7 +8,7 @@ import os
 import sys
 import operator
 
-INNODB_PAGE_SIZE = 1024 * 16  # InnoDB Page 16K
+INNODB_PAGE_SIZE = 1024 * 16  # InnoDB Page  default 16K
 
 
 def get_table_disk_usage_percent(fil):
