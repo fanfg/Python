@@ -1,10 +1,15 @@
-#!/usr/bin/python
+
+# !/usr/bin/env python
+#coding=utf-8
+# __author__ = 'fanfugui'
+# desc: get table spcace usage percent by parse ibd file
 
 import os
 import sys
 import operator
 
 INNODB_PAGE_SIZE = 1024 * 16  # InnoDB Page 16K
+
 
 def get_table_disk_usage_percent(fil):
     fil = file(fil, 'rb')
@@ -32,11 +37,18 @@ def get_table_disk_usage_percent(fil):
 
 if __name__ == '__main__':
     dir_name = sys.argv[1]
-    g_file = os.walk(dir_name)
-    files = next(g_file)[2]
-    result={}
+    result = {}
+    files = []
+    #parse dir
+    if os.path.isdir(dir_name):
+        g_file = os.walk(dir_name)
+        files = next(g_file)[2]
+    #parse  file
+    else:
+        files.append(os.path.basename(dir_name))
+        dir_name = os.path.dirname(dir_name)
     for file_name in files:
-        if file_name.endswith('ibd'):
-            result[file_name.replace('.ibd','')]=get_table_disk_usage_percent(dir_name + '/' + file_name)
-    for table_name , usage_percent in sorted(result.items(), key=operator.itemgetter(1),reverse=False):
+        if file_name.endswith('.ibd'):
+            result[file_name.replace('.ibd', '')] = get_table_disk_usage_percent(dir_name + '/' + file_name)
+    for table_name, usage_percent in sorted(result.items(), key=operator.itemgetter(1), reverse=False):
         print ('table {1:20} disk usage percent : {0}%'.format(usage_percent, table_name))
