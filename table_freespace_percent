@@ -2,7 +2,7 @@
 # !/usr/bin/env python
 #coding=utf-8
 # __author__ = 'fanfugui'
-# desc: get table spcace usage percent by parse ibd file
+# desc: get table space usage percent by parse ibd file
 
 import os
 import sys
